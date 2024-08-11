@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: transparent; /* Background transparent */
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+            color: white; /* Text putih */
+        }
+
+        h2 {
+            color: white;
+        }
+
+        form {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        label {
+            margin-bottom: 5px;
+            color: white;
+        }
+
+        input[type="text"], textarea {
+            width: 300px;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+        }
+
+        button {
+            background-color: #e50914;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #9f0e0e;
+        }
+
+        #output {
+            margin-top: 20px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff; /* Background putih */
+            text-align: left;
+        }
+
+        #output p {
+            margin: 0;
+            color: black; /* Text hitam di dalam hasil generator */
+        }
+
+        button.copy {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Chat Generator</h2>
+    <form id="chatForm">
+        <label for="nama">Nama:</label>
+        <input type="text" id="nama" name="nama">
+        <label for="device">Device:</label>
+        <input type="text" id="device" name="device">
+        <label for="notracking">No Tracking:</label>
+        <input type="text" id="notracking" name="notracking">
+        <label for="diagnosa">Diagnosa Kerusakan:</label>
+        <textarea id="diagnosa" name="diagnosa"></textarea>
+        <label for="estimasi">Estimasi Biaya:</label>
+        <input type="text" id="estimasi" name="estimasi">
+        <button type="button" onclick="generateChat()">Generate</button>
+    </form>
+    <div id="output"></div>
+    <button class="copy" onclick="copyToClipboard()">Copy to Clipboard</button>
+
+    <script>
+        function generateChat() {
+            var nama = document.getElementById("nama").value;
+            var device = document.getElementById("device").value;
+            var notracking = document.getElementById("notracking").value;
+            var diagnosa = document.getElementById("diagnosa").value;
+            var estimasi = document.getElementById("estimasi").value;
+            var output = document.getElementById("output");
+
+            var chatText = "<p>Hi " + nama + ",<br><br>" +
+                           "Kami dari Bytes ingin memberitahukan bahwa kami telah melakukan diagnosa terhadap <strong>" + device + "</strong> Anda dengan nomor tracking <strong>" + notracking + "</strong>. Berikut adalah hasil diagnosa kerusakan yang kami temukan:<br>" + diagnosa + "<br><br>" +
+                           "Estimasi biaya untuk perbaikan ini adalah sekitar Rp. " + estimasi + ", namun perlu diingat bahwa biaya tersebut bisa lebih atau kurang dari perkiraan. Mohon diinformasikan apakah Anda ingin melanjutkan ke tahap perbaikan dengan estimasi biaya tersebut.<br><br>" +
+                           "Saatnya untuk mengambil keputusan. No tracking berfungsi untuk melihat status perbaikan. Untuk melacak status perbaikan, silakan kunjungi website kami di <a href='https://bytescomp.com/patient-tracking/'>https://bytescomp.com/patient-tracking/</a>.<br><br>" +
+                           "Kami siap membantu Anda dalam proses perbaikan.<br><br>" +
+                           "Salam,<br>Tim Bytes</p>";
+
+            output.innerHTML = chatText;
+        }
+
+        function copyToClipboard() {
+            var output = document.getElementById("output");
+            var range = document.createRange();
+            range.selectNode(output);
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(range);
+            document.execCommand("copy");
+            window.getSelection().removeAllRanges();
+            alert("Text copied to clipboard!");
+        }
+    </script>
+</body>
+</html>

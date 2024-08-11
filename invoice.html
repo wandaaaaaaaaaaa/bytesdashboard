@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: transparent; /* Background transparent */
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+            color: white; /* Text putih */
+        }
+
+        h2 {
+            color: white;
+        }
+
+        form {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        label {
+            margin-bottom: 5px;
+            color: white;
+        }
+
+        input[type="text"], textarea {
+            width: 300px;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+        }
+
+        button {
+            background-color: #e50914;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #9f0e0e;
+        }
+
+        #output {
+            margin-top: 20px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff; /* Background putih */
+            text-align: left;
+        }
+
+        #output p {
+            margin: 0;
+            color: black; /* Text hitam di dalam hasil generator */
+        }
+
+        button.copy {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Chat Generator</h2>
+    <form id="chatForm">
+        <label for="nama">Nama:</label>
+        <input type="text" id="nama" name="nama">
+        <label for="device">Device:</label>
+        <input type="text" id="device" name="device">
+        <label for="notracking">No Tracking:</label>
+        <input type="text" id="notracking" name="notracking">
+        <label for="diagnosa">Daftar Kerusakan:</label>
+        <textarea id="diagnosa" name="diagnosa"></textarea>
+        <label for="biaya">Total Biaya:</label>
+        <input type="text" id="biaya" name="biaya" oninput="formatBiaya()">
+        <button type="button" onclick="generateChat()">Generate</button>
+    </form>
+    <div id="output"></div>
+    <button class="copy" onclick="copyToClipboard()">Copy to Clipboard</button>
+
+    <script>
+        function formatBiaya() {
+            var biaya = document.getElementById("biaya");
+            biaya.value = biaya.value.replace(/\D/g, '')
+                .replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+        }
+
+        function generateChat() {
+            var nama = document.getElementById("nama").value;
+            var device = document.getElementById("device").value;
+            var notracking = document.getElementById("notracking").value;
+            var diagnosa = document.getElementById("diagnosa").value.replace(/\n/g, '<br>');
+            var biaya = document.getElementById("biaya").value;
+            var output = document.getElementById("output");
+
+            var chatText = "<p>Hi " + nama + ",<br><br>" +
+                           "Kami dari Bytes senang memberitahukan bahwa perbaikan pada *" + device + "* Anda dengan nomor tracking *" + notracking + "* telah selesai. Berikut adalah daftar kerusakan yang telah berhasil diperbaiki:<br><br>" +
+                           diagnosa + "<br><br>" +
+                           "Total biaya tagihan untuk perbaikan ini adalah *Rp. " + biaya + "*. Invoice telah disematkan dalam chat ini. Mohon segera melakukan pembayaran sesuai dengan informasi yang tertera pada invoice.<br><br>atau bisa melakukan pembayaran melalui :<br>" +
+                            " - Cash<br>" +
+                            " - QR<br>" +
+                            " - Bank Transfer : BCA 2820385121 (A/N Muhammad Gilang Mahesa H)<br><br>" +
+                           "Terima kasih atas kesabaran dan kepercayaan Anda kepada Bytes. Jika ada pertanyaan lebih lanjut atau bantuan, jangan ragu untuk menghubungi kami.<br><br>" +
+                           "Terima kasih dan semoga " + device + " Anda kembali berfungsi dengan baik.</p>";
+
+            output.innerHTML = chatText;
+        }
+
+        function copyToClipboard() {
+            var output = document.getElementById("output");
+            var range = document.createRange();
+            range.selectNode(output);
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(range);
+            document.execCommand("copy");
+            window.getSelection().removeAllRanges();
+            alert("Text copied to clipboard!");
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: transparent; /* Background transparent */
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+            color: white; /* Text putih */
+        }
+
+        h2 {
+            color: white;
+        }
+
+        form {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        label {
+            margin-bottom: 5px;
+            color: white;
+        }
+
+        input[type="text"] {
+            width: 300px;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+        }
+
+        button {
+            background-color: #e50914;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #9f0e0e;
+        }
+
+        #output {
+            margin-top: 20px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff; /* Background putih */
+            text-align: left;
+        }
+
+        #output p {
+            margin: 0;
+            color: black; /* Text hitam di dalam hasil generator */
+        }
+
+        .copy {
+            margin-top: 20px;
+            color: white;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h2>Chat Generator</h2>
+    <form id="chatForm">
+        <label for="nama">Nama:</label>
+        <input type="text" id="nama" name="nama">
+        <button type="button" onclick="generateChat()">Generate</button>
+    </form>
+    <div id="output"></div>
+    <div class="copy" onclick="copyToClipboard()">Copy to Clipboard</div>
+
+    <script>
+        function generateChat() {
+            var nama = document.getElementById("nama").value;
+            var output = document.getElementById("output");
+
+            var chatText = "<p>Hi " + nama + ",<br><br>" +
+                           "Terima kasih telah memilih Bytes untuk layanan perbaikan gadget Anda!<br><br>" +
+                           "Kami menghargai setiap pengalaman dan masukan dari Anda. Ingin berbagi cerita tentang " +
+                           "kunjungan Anda ke Bytes? Silakan berikan ulasan di Google Maps melalui link ini: <a href='https://g.co/kgs/DrDB8MW'>https://g.co/kgs/DrDB8MW</a>.<br><br>" +
+                           "Setiap ulasan dan feedback dari Anda sangat berarti bagi kami! Terima kasih atas dukungan dan kepercayaan Anda!</p>";
+
+            output.innerHTML = chatText;
+        }
+
+        function copyToClipboard() {
+            var output = document.getElementById("output");
+            var range = document.createRange();
+            range.selectNode(output);
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(range);
+            document.execCommand("copy");
+            window.getSelection().removeAllRanges();
+            alert("Text copied to clipboard!");
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WhatsApp Link Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: transparent; /* Background transparent */
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+            color: white; /* Text putih */
+        }
+
+        h2 {
+            color: white;
+        }
+
+        form {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        label {
+            margin-bottom: 5px;
+            color: white;
+        }
+
+        input[type="text"] {
+            width: 300px;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+        }
+
+        button {
+            background-color: #e50914;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #9f0e0e;
+        }
+    </style>
+    <script>
+        function generateAndOpenLink() {
+            // Ambil nilai input dari form
+            var phoneNumber = document.getElementById("phoneNumber").value;
+            
+            // Hapus karakter non-digit seperti "-", "+", dan spasi
+            var cleanedNumber = phoneNumber.replace(/[^\d]/g, '');
+
+            // Pastikan nomor dimulai dengan "62"
+            if (!cleanedNumber.startsWith("62")) {
+                if (cleanedNumber.startsWith("0")) {
+                    cleanedNumber = "62" + cleanedNumber.substring(1);
+                } else {
+                    cleanedNumber = "62" + cleanedNumber;
+                }
+            }
+
+            // Buat link WhatsApp
+            var waLink = "https://wa.me/" + cleanedNumber;
+
+            // Buka link di tab baru
+            window.open(waLink, "_blank");
+        }
+    </script>
+</head>
+<body>
+    <h2>WhatsApp Link Generator</h2>
+    <form onsubmit="event.preventDefault(); generateAndOpenLink();">
+        <label for="phoneNumber">Masukkan Nomor Telepon:</label><br>
+        <input type="text" id="phoneNumber" name="phoneNumber"><br><br>
+        <button type="submit">Generate Link</button>
+    </form>
+</body>
+</html>
+

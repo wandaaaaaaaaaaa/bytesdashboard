@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: rgba(17,17,17,0.8); /* Latar belakang transparan */
+            color: #fff;
+        }
+        header {
+            background-color: transparent; /* Latar belakang transparan */
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+        }
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            text-align: center;
+        }
+        nav ul li {
+            display: inline;
+            margin-right: 20px;
+        }
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        main {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 1px solid #333;
+            border-radius: 8px;
+            background-color: rgba(34,34,34,0.8); /* Latar belakang transparan */
+            text-align: center; /* Fokus ditengah */
+        }
+        h1 {
+            text-align: center;
+            color: #fff; /* Warna putih */
+        }
+        form {
+            margin-top: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #fff; /* Warna putih */
+        }
+        input[type="text"], input[type="checkbox"], input[type="submit"] {
+            margin-bottom: 10px;
+            background-color: rgba(0,0,0,0.8); /* Latar belakang transparan */
+            color: #fff; /* Warna putih */
+            border: none;
+            border-radius: 5px;
+            padding: 10px 15px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #e50914;
+        }
+        .result {
+            margin-top: 20px;
+            color: #fff; /* Warna putih */
+            text-align: left; /* Fokus konten ditengah */
+        }
+        .result h2, .result h3 {
+            color: #e50914;
+        }
+        .result p, .result ul {
+            color: #fff; /* Warna putih */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Kalkulasi</h1>
+        <nav>
+        </nav>
+    </header>
+    <main>
+        <form id="calcForm">
+            <label for="harga">Harga Beli (Rp):</label>
+            <input type="text" id="harga" name="harga" required>
+            <label for="service">Service:</label>
+            <input type="checkbox" id="service" name="service">
+            <input type="submit" value="Hitung">
+        </form>
+        <div class="result" id="result"></div>
+    </main>
+
+    <script>
+        document.getElementById('calcForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            var harga = parseFloat(document.getElementById('harga').value);
+            var service = document.getElementById('service').checked;
+            var persen;
+            if (harga <= 500000) {
+                persen = 25;
+            } else {
+                persen = 10;
+            }
+            var tambahan = harga * (persen / 100);
+            var hpp = harga + tambahan + 30000 + 15000;
+            if (service) {
+                hpp += 50000;
+                tambahan += 50000;
+            }
+            hpp += 20000; // biaya kopi
+            var biayaSewa = harga * 0.1; // Biaya sewa 10% dari harga
+            hpp += biayaSewa;
+            var breakdown = `
+                <h2>Breakdown Anggaran</h2>
+                <p>Harga Bahan Beli: Rp ${harga}</p>
+                <p>Persen yang Digunakan: ${persen}%</p>
+                <p>Biaya Tambahan:</p>
+                <ul>
+                    <li>${persen}% - ${tambahan}: Rp ${tambahan}</li>
+                    <li>Biaya Pengiriman: Rp 30,000</li>
+                    <li>Biaya Packing: Rp 15,000</li>
+                    ${service ? '<li>Biaya Service: Rp 50,000</li>' : ''}
+                    <li>Biaya Kopi: Rp 20,000</li>
+                    <li>Biaya Sewa: Rp ${biayaSewa}</li>
+                </ul>
+                <h3>Total Harga Jual: Rp ${hpp}</h3>
+            `;
+            document.getElementById('result').innerHTML = breakdown;
+        });
+    </script>
+</body>
+</html>
